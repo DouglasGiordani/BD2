@@ -1,0 +1,43 @@
+. Crie uma consulta que retorne do empregado o nome, sobrenome além de informações sobre
+salários (valor, data inicial e data final). Ordene os salários por ordem cronológico de início. Filtre
+a consulta pelo empregado número 10006 (inner join).
+
+SELECT employees.first_name , employees.last_name , salaries.salary , salaries.from_date , salaries.to_date
+from   employees
+INNER JOIN dept_emp ON dept_emp.emp_no = employees.emp_no 
+INNER JOIN salaries ON salaries.emp_no = dept_emp.emp_no
+where employees.emp_no=10006 order by salary;
+
+Crie uma consulta que retorne o nome e sobrenome dos empregados. O resultado também deve
+apresentar o nome dos departamentos que ele trabalha ou trabalhou informando para isso a
+data inicial e a data final (inner join). 
+
+SELECT employees.first_name , employees.last_name,departments.dept_name, dept_manager.from_date, dept_manager.to_date
+from   employees
+INNER JOIN dept_emp ON dept_emp.emp_no = employees.emp_no 
+INNER JOIN departments ON departments.dept_no = dept_emp.dept_no
+INNER JOIN dept_manager ON dept_manager.dept_no= departments.dept_no ;
+
+Retorne todos os empregados cujo número seja 110022 ou 110085 ou 10006. Apresente o
+nome, sobrenome e nome do departamento que ele gerencia (left join). 
+
+SELECT employees.first_name , employees.last_name, departments.dept_name
+from   employees
+left join dept_emp ON dept_emp.emp_no = employees.emp_no 
+left join departments ON departments.dept_no = dept_emp.dept_no
+WHERE employees.emp_no IN (110022,110085,10006);
+
+Crie a consulta solicitada abaixo:
+a. Primeiro insira esta nova linha na tabela de departamentos: insert into departments
+values ('d99','Compras internas');
+b. É desejado obter todos os departamentos e seus gerentes. Apresente o nome do
+departamento, nome e sobrenome do empregado. De forma obrigatório a tabela de
+departamentos tem que estar localizada do lado direito da consulta. Crie a consulta
+execute e comente o resultado encontrado (right join).
+
+insert into departments values ('d99','Compras internas');
+
+SELECT departments.dept_name, employees.first_name, employees.last_name
+from departments
+right join dept_emp ON dept_emp.dept_no = departments.dept_no
+right join employees ON employees.emp_no = dept_emp.emp_no ;
